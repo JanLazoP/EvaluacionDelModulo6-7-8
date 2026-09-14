@@ -33,6 +33,30 @@ Página principal de la aplicación.
 
 Ruta utilizada para comprobar el estado del servidor. Devuelve una respuesta en formato JSON indicando que el servidor está funcionando correctamente.
 
+### PUT /usuarios/id
+
+Ruta utilizada para actualizar un usuario mediante su id. El body de la solicitud debe contener los campos nombres y email.
+
+### DELETE /usuarios/id
+
+Ruta utilizada para eliminar un usuario mediante su id.
+
+### POST /usuarios
+
+Ruta utilizada para agregar un usuario a la base de datos. El body debe contener los campos nombre y email.
+
+### POST /usuarios/con-pedido
+
+Ruta utilizada para agregar un usuario y un pedido. El body debe contener los campos nombre, email, descripcion y monto.
+
+### GET /usuarios-orm
+
+Ruta utilizada para consultar los usuarios de la base de datos utilizando Sequelize como ORM.
+
+### GET /usuarios-con-pedidos
+
+Ruta que devuelve los usuarios con sus pedidos relacionados mediante una relación ORM.
+
 ## Justificaciones
 
 ### Módulo 6

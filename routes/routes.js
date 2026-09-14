@@ -140,7 +140,7 @@ router.post('/usuarios', async (req, res) => {
     }
 })
 
-//agregar un usuario con producto
+//agregar un usuario con pedido
 
 router.post('/usuarios/con-pedido', async (req, res) => {
     const { nombre, email, descripcion, monto } = req.body;
