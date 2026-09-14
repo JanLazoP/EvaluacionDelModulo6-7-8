@@ -1,7 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import pool from '../models/database.js';
-import Usuario from '../models/usuario.js';
+import { Usuario, Pedido } from '../models/relations.js';
 
 const router = express.Router();
 
@@ -107,6 +107,39 @@ router.delete('/usuarios/:id', async (req,res) =>{
     }
 });
 
+//agregar un usuario
+
+router.post('/usuarios', async (req, res) => {
+    const { nombre, email } = req.body;
+
+    if(!nombre || !email){
+        return res.status(400).json({
+            error: 'El nombre y el email son obligatorios'
+        });
+    }
+
+    try{
+        const usuario = await pool.query(
+
+            `INSERT INTO usuarios (nombre, email)
+             VALUES ($1, $2)
+             RETURNING id, nombre, email`,
+            [nombre, email]);
+        
+        res.status(201).json({
+            mensaje: 'Usuario agregado con éxito',
+            usuario: usuario.rows[0]
+        })
+
+    }catch(error){
+        console.error('Error al agregar usuario', error.message);
+
+        res.status(500).json({
+            error: 'Error al agregar un usuario'
+        })
+    }
+})
+
 //agregar un usuario con producto
 
 router.post('/usuarios/con-pedido', async (req, res) => {
@@ -166,6 +199,29 @@ router.get('/usuarios-orm', async (req, res) => {
 
         res.status(500).json({
             error: 'Error al obtener los usuarios'
+        });
+    }
+});
+
+//consulta de usuarios con pedidos
+router.get('/usuarios-con-pedidos', async (req, res) => {
+    try{
+        const usuarios = await Usuario.findAll({
+            attributes: ['id', 'nombre', 'email'],
+            include: [
+                {
+                    model: Pedido,
+                    attributes: ['id', 'descripcion', 'monto']
+                }
+            ]
+        });
+
+        res.json(usuarios);
+    }catch(error){
+        console.error('Error al obtener usuarios con pedidos:', error.message);
+
+        res.status(500).json({
+            error: 'Error al obtener usuarios con sus pedidos'
         });
     }
 });

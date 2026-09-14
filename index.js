@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import router from './routes/routes.js';
 import pool from './models/database.js';
 import sequelize from './models/sequelize.js';
+import './models/relations.js';
 
 dotenv.config();
 
