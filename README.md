@@ -42,5 +42,5 @@ Ruta utilizada para comprobar el estado del servidor. Devuelve una respuesta en 
 
 ### Módulo 7
 
-- Elegí el cliente de conexión Sequelize porque era lo mas reciente que habiamos aprendido y se me resultó mas familiar. Además, esto me permite comenzar a trabajar con un ORM desde esta etapa y prepararme para utilizarlo en las siguientes partes del proyecto.
+- Elegí el cliente pg porque es la herramienta que trabajamos a lo largo de varias clases y con lo que estoy más familiarizado. Además, resulta adecuado para trabajar con nuestra base de datos PostgreSQL.
 - Los datos sensibles, como las credenciales para conectarse a la base de datos PostgreSQL, se almacenan en el archivo .env. Este archivo está incluido en .gitignore, por lo que no se sube al repositorio público y se evita exponer esta información.
