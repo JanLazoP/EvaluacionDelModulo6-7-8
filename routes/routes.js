@@ -63,6 +63,7 @@ router.put('/usuarios/:id', async (req,res) => {
             mensaje: 'Usuario actualizado correctamente',
             usuario: resultado.rows[0]
         });
+
     } catch(error){
         console.error('Erorr al actualizar usuario:', error.message);
 
@@ -95,11 +96,59 @@ router.delete('/usuarios/:id', async (req,res) =>{
         res.json({
             mensaje: 'Usuario eliminado correctamente'
         });
+
     }catch(error){
         console.error('Error al eliminar usuario:', error.message);
+
         res.status(500).json({
             error: 'Error al eliminar el usuario'
         });
+    }
+});
+
+//agregar un usuario con producto
+
+router.post('/usuarios/con-pedido', async (req, res) => {
+    const { nombre, email, descripcion, monto } = req.body;
+
+    const client = await pool.connect();
+
+    try{
+        await client.query('BEGIN');
+
+        const usuario = await client.query(
+            `INSERT INTO usuarios (nombre, email)
+            VALUES ($1, $2)
+            RETURNING id, nombre, email`, 
+            [nombre, email]
+        );
+
+        const usuarioId = usuario.rows[0].id;
+
+        const pedido = await client.query(
+            `INSERT INTO pedidos (descripcion, monto, usuario_id)
+            VALUES ($1, $2, $3)
+            RETURNING descripcion, monto, usuario_id`,
+            [descripcion, monto, usuarioId]
+        );
+
+        await client.query('COMMIT');
+
+        res.status(201).json({
+            mensaje: 'Transacción realizada correctamente',
+            usuario: usuario.rows[0],
+            pedido: pedido.rows[0]
+        });
+    }catch(error){
+        await client.query('ROLLBACK');
+
+        console.error('Transaccion cancelada:', error.message);
+
+        res.status(500).json({
+            error: 'La transacción fue cancelada y los cambios fueron revertidos'
+        });
+    } finally {
+        client.release();
     }
 });
 

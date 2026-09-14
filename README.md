@@ -25,7 +25,7 @@ npm run dev
 
 ## Rutas
 
-## GET /
+### GET /
 
 Página principal de la aplicación.
 
