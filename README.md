@@ -33,7 +33,7 @@ Página principal de la aplicación.
 
 Ruta utilizada para comprobar el estado del servidor. Devuelve una respuesta en formato JSON indicando que el servidor está funcionando correctamente.
 
-## Justificación
+## Justificaciones
 
 ### Módulo 6
 
@@ -46,3 +46,4 @@ Ruta utilizada para comprobar el estado del servidor. Devuelve una respuesta en 
 - Los datos sensibles, como las credenciales para conectarse a la base de datos PostgreSQL, se almacenan en el archivo .env. Este archivo está incluido en .gitignore, por lo que no se sube al repositorio público y se evita exponer esta información.
 - En la ruta de actualizar usuario decidi actualizar solo ciertos campos, como nombre y email, porque el id funciona como identificador único del registro y no debería ser modificado.
 - Para evitar errores en la actualización y eliminación de usuarios, validé que primero el usuario indicado exista en la base de datos. Si el usuario no existe, la aplicación devuelve un mensaje de error y no realiza la operación.
+- La ventaja que encontre usando ORM frente al cliente SQL como pg es que ORM permite trabajar con los datos mediante modelos y métodos de JavaScript, reduciendo la cantidad de consultas SQL que se deben escribir manualmente. Esto facilita la lectura y organización del código.

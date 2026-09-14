@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import router from './routes/routes.js';
 import pool from './models/database.js';
+import sequelize from './models/sequelize.js';
 
 dotenv.config();
 
@@ -16,6 +17,9 @@ app.use('/', router);
 try{
     await pool.query('SELECT NOW()');
     console.log('Conexion a PostgreSQL exitosa');
+
+    await sequelize.authenticate();
+    console.log('Conexión a PostgreSQL mediante Sequelize exitosa');
 
     app.listen(PORT, () => {
         console.log(`Servidor iniciado en http://localhost:${PORT}`);

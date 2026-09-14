@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import pool from '../models/database.js';
+import Usuario from '../models/usuario.js';
 
 const router = express.Router();
 
@@ -151,6 +152,24 @@ router.post('/usuarios/con-pedido', async (req, res) => {
         client.release();
     }
 });
+
+//ruta que devuelve usuarios usando ORM
+router.get('/usuarios-orm', async (req, res) => {
+    try{
+        const usuarios = await Usuario.findAll({
+            attributes: ['id', 'nombre', 'email']
+        });
+
+        res.json(usuarios);
+    }catch(error){
+        console.error('Error al obtener usuarios mediante ORM:', error.message);
+
+        res.status(500).json({
+            error: 'Error al obtener los usuarios'
+        });
+    }
+});
+
 
 function registrarVisita(ruta){
     const fecha = new Date();
