@@ -15,7 +15,7 @@ router.get('/status', (req,res) => {
     });
 });
 
-//get usuarios
+/* //get usuarios
 router.get('/usuarios', async (req,res) => {
 
     try{
@@ -138,7 +138,7 @@ router.post('/usuarios', async (req, res) => {
             error: 'Error al agregar un usuario'
         })
     }
-})
+}) */
 
 //agregar un usuario con pedido
 

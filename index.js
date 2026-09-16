@@ -4,6 +4,8 @@ import router from './routes/routes.js';
 import pool from './models/database.js';
 import sequelize from './models/sequelize.js';
 import './models/relations.js';
+import usuarioRoutes from './routes/usuarios.js';
+import pedidoRouter from './routes/pedidos.js';
 
 dotenv.config();
 
@@ -13,6 +15,8 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(express.static('public'));
 app.use('/', router);
+app.use('/usuarios', usuarioRoutes);
+app.use('/pedidos', pedidoRouter)
 
 
 try{
