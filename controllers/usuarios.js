@@ -20,6 +20,12 @@ export const ingresarUsuarios = async (req,res) => {
     try{
         const {nombre, email} = req.body;
 
+        if (!nombre?.trim() || !email?.trim()) {
+            return res.status(400).json({
+                error: 'El nombre y el email son obligatorios'
+            });
+        }
+
         const usuario = await Usuario.create({
             nombre: nombre,
             email: email
@@ -43,6 +49,12 @@ export const actualizarUsuario = async (req,res) => {
     try{
         const {id} = req.params;
         const { nombre, email } = req.body;
+
+        if (!nombre?.trim() || !email?.trim()) {
+            return res.status(400).json({
+                error: 'El nombre y el email son obligatorios'
+            });
+        }
 
         const usuario = await Usuario.findByPk(id);
 

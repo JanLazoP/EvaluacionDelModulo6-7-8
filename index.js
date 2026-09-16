@@ -6,6 +6,7 @@ import sequelize from './models/sequelize.js';
 import './models/relations.js';
 import usuarioRoutes from './routes/usuarios.js';
 import pedidoRouter from './routes/pedidos.js';
+import uploadRoutes from './routes/upload.js';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 app.use('/', router);
 app.use('/usuarios', usuarioRoutes);
 app.use('/pedidos', pedidoRouter)
+app.use('/upload', uploadRoutes);
 
 
 try{

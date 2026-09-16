@@ -20,19 +20,24 @@ export const ingresarPedido = async (req,res) => {
 
     try{
 
-    
-    const { descripcion, monto, usuario_id } = req.body;
+        const { descripcion, monto, usuario_id } = req.body;
 
-    const pedido = await Pedido.create({
-        descripcion: descripcion,
-        monto: monto,
-        usuario_id: usuario_id
-    });
+        if (!descripcion?.trim() || !monto || !usuario_id) {
+            return res.status(400).json({
+                error: 'La descripción, el monto y el usuario son obligatorios'
+            });
+        }
 
-    res.status(201).json({
-        mensaje: 'Pedido creado con éxito',
-        pedido
-    });
+        const pedido = await Pedido.create({
+            descripcion: descripcion,
+            monto: monto,
+            usuario_id: usuario_id
+        });
+
+        res.status(201).json({
+            mensaje: 'Pedido creado con éxito',
+            pedido
+        });
 
     }catch(error){
 
@@ -48,6 +53,12 @@ export const actualizarPedido = async (req, res) => {
 
         const { id } = req.params;
         const { descripcion, monto } = req.body;
+
+        if (!descripcion?.trim() || !monto) {
+            return res.status(400).json({
+                error: 'La descripción y el monto son obligatorios'
+            });
+        }
 
         const pedido = await Pedido.findByPk(id);
 
