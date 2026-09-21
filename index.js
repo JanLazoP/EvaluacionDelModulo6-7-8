@@ -27,8 +27,12 @@ try{
     await pool.query('SELECT NOW()');
     console.log('Conexion a PostgreSQL exitosa');
 
-    await sequelize.authenticate();
-    console.log('Conexión a PostgreSQL mediante Sequelize exitosa');
+/*     await sequelize.authenticate();
+    console.log('Conexión a PostgreSQL mediante Sequelize exitosa'); */
+
+
+    await sequelize.sync();
+    console.log('Modelos sincronizados');
 
     app.listen(PORT, () => {
         console.log(`Servidor iniciado en http://localhost:${PORT}`);
